@@ -1,15 +1,25 @@
-from data_loader import clean_sjc 
-# Sau này sẽ import thêm clean_usdvnd, clean_xauusd từ data_loader 
-# và import merge_data từ feature_engineering 
+import os
+from src.data_loader import clean_sjc
+from src.clean_xauusd import clean_xauusd
+from src.clean_usdvnd import clean_usdvnd
+from src.feature_engineering import build_final_dataset
+from src.descriptive_stats import export_statistics, descriptive_statistics
 
-def run_pipeline(): 
-    print("--- BẮT ĐẦU QUY TRÌNH XỬ LÝ DỮ LIỆU GIÁ VÀNG SJC ---") 
+def main():
+    print("🚀 Bắt đầu chạy toàn bộ quy trình dự án Phân tích giá vàng...")
     
-    # 1. Đọc và làm sạch SJC 
-    df_sjc = clean_sjc('data/raw/sjc_raw.csv') 
-    print(f"Đã nạp dữ liệu SJC: {len(df_sjc)} bản ghi.") 
+    # 1. Làm sạch dữ liệu
+    df_sjc = clean_sjc("data/raw/sjc_raw.csv")
+    df_xau = clean_xauusd("data/raw/xauusd_raw.csv")
+    df_usd = clean_usdvnd("data/raw/usdvnd_raw.csv")
     
-    # 2. Sau này sẽ gọi tiếp các hàm của TV2, TV3 và TV4 tại đây... 
+    # 2. Ghép dữ liệu và tạo biến phái sinh
+    df_final = build_final_dataset(df_sjc, df_xau, df_usd, "data/processed/gold_final_merged.csv")
+    
+    # 3. Chạy thống kê mô tả ban đầu
+    export_statistics(df_final, output_dir="data/processed/stats")
+    
+    print("🎉 Hoàn tất toàn bộ pipeline của Mốc 03!")
 
-if __name__ == '__main__': 
-    run_pipeline()
+if __name__ == "__main__":
+    main()
