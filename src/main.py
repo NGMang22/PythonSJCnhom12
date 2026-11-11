@@ -1,5 +1,6 @@
 import os
 import sys
+from src.visualization import generate_member1_charts
 
 # Đảm bảo Python nhận diện được cả thư mục gốc và thư mục src/ khi import
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -85,6 +86,9 @@ def main():
     print("👉 File dữ liệu sạch: data/processed/gold_final_merged.csv")
     print("👉 6 bảng thống kê đã có trong: data/processed/stats/")
     print("=" * 60)
+
+    print("\n⏳ [4/4] Đang xuất các biểu đồ trực quan (TV1 & TV2)...")
+    generate_member1_charts("data/processed/gold_final_merged.csv")
 
 if __name__ == "__main__":
     main()
