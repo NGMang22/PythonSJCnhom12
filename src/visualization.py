@@ -1,12 +1,6 @@
-"""src/visualization.py - Trực quan hóa dữ liệu giá vàng SJC và giá thế giới. 
-Do Thành viên 1 (Nguyễn Tuấn Minh) phụ trách: 
-- Vẽ Biểu đồ 1: So sánh xu hướng giá bán SJC vs Giá thế giới quy đổi. 
-- Vẽ Biểu đồ 2: Diễn biến mức chênh lệch tuyệt đối (Triệu đồng) và phần trăm (%). 
-- Tự động xuất ảnh chất lượng cao vào data/processed/figures/ 
-""" 
 import os 
-import matplotlib.pyplot as plt 
 import numpy as np
+import matplotlib.pyplot as plt 
 import pandas as pd 
 
 # Thiết lập font và style cho biểu đồ đẹp mắt 
@@ -98,7 +92,10 @@ def generate_member1_charts(csv_path: str = "data/processed/gold_final_merged.cs
     plot_price_discrepancy(df, output_dir) 
     print("🎉 [TV1] Hoàn thành 100% nhiệm vụ vẽ Biểu đồ 1 & Biểu đồ 2!") 
 
-"""
+if __name__ == "__main__": 
+    generate_member1_charts()
+
+    """
 Do Thành viên 2 (Vũ Thị Thùy Trang) phụ trách:
 - Vẽ Biểu đồ 3: Boxplot phân phối mức chênh lệch giá theo từng năm (2020 - 2026)
   kèm Histogram phân phối chung của cả giai đoạn.
@@ -229,4 +226,4 @@ def generate_charts_3_4(csv_path: str = "data/processed/gold_final_merged.csv",
                             
 if __name__ == "__main__": 
     generate_member1_charts()
-    generate_charts_3_4()    
+    generate_charts_3_4()
