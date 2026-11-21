@@ -1,6 +1,5 @@
 import os
 import sys
-from src.visualization import generate_member1_charts
 
 # Đảm bảo Python nhận diện được cả thư mục gốc và thư mục src/ khi import
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -14,24 +13,15 @@ try:
     from clean_xauusd import clean_xauusd
     from clean_usdvnd import clean_usdvnd
     from feature_engineering import build_final_dataset
+    from descriptive_stats import run as run_stats
+    from visualization import generate_member1_charts
 except ModuleNotFoundError:
     from src.data_loader import clean_sjc
     from src.clean_xauusd import clean_xauusd
     from src.clean_usdvnd import clean_usdvnd
     from src.feature_engineering import build_final_dataset
-
-# 2. IMPORT HÀM RUN TỪ DESCRIPTIVE_STATS_2
-try:
-    from descriptive_stats import run as run_stats
-except ModuleNotFoundError:
-    try:
-        from src.descriptive_stats import run as run_stats
-    except ModuleNotFoundError:
-        # Dự phòng trường hợp bạn đã đổi tên file thành descriptive_stats.py
-        try:
-            from descriptive_stats import run as run_stats
-        except ModuleNotFoundError:
-            from src.descriptive_stats import run as run_stats
+    from src.descriptive_stats import run as run_stats
+    from src.visualization import generate_member1_charts
 
 def main():
     print("=" * 60)
@@ -47,24 +37,24 @@ def main():
     # -------------------------------------------------------------
     # BƯỚC 1: LÀM SẠCH DỮ LIỆU ĐẦU VÀO (TV1, TV2, TV3)
     # -------------------------------------------------------------
-    print("\n⏳ [1/3] Đang làm sạch dữ liệu từ 3 file thô...")
+    print("\n⏳ [1/4] Đang làm sạch dữ liệu từ 3 file thô...")
     try:
         df_sjc = clean_sjc(path_sjc)
         df_xau = clean_xauusd(path_xau)
         df_usd = clean_usdvnd(path_usd)
-        print(f" - SJC (TV1) : {len(df_sjc):,} dòng hợp lệ")
-        print(f" - XAU/USD (TV3) : {len(df_xau):,} dòng hợp lệ")
-        print(f" - USD/VND (TV2) : {len(df_usd):,} dòng hợp lệ")
+        print(f" - SJC  : {len(df_sjc):,} dòng hợp lệ")
+        print(f" - XAU/USD  : {len(df_xau):,} dòng hợp lệ")
+        print(f" - USD/VND  : {len(df_usd):,} dòng hợp lệ")
     except Exception as e:
         print(f"❌ Lỗi tại Bước 1 (Làm sạch dữ liệu): {e}")
         return
 
     # -------------------------------------------------------------
-    # BƯỚC 2: GHÉP DỮ LIỆU & TẠO BIẾN PHÁI SINH (TV4)
+    # BƯỚC 2: GHÉP DỮ LIỆU & TẠO BIẾN PHÁI SINH 
     # -------------------------------------------------------------
-    print("\n⏳ [2/3] Đang ghép 3 bảng và tính toán các thuộc tính phái sinh...")
+    print("\n⏳ [2/4] Đang ghép 3 bảng và tính toán các thuộc tính phái sinh...")
     try:
-        df_merged = build_final_dataset(df_sjc, df_xau, df_usd, output_path=output_merged)
+        df_merged = build_final_dataset(df_sjc, df_usd, df_xau, output_path=output_merged)
         print(f" ✅ Đã lưu file tổng hợp: {output_merged} ({len(df_merged):,} dòng)")
     except Exception as e:
         print(f"❌ Lỗi tại Bước 2 (Ghép bảng TV4): {e}")
@@ -73,7 +63,7 @@ def main():
     # -------------------------------------------------------------
     # BƯỚC 3: THỐNG KÊ MÔ TẢ & XUẤT 6 BẢNG SỐ LIỆU (TV5)
     # -------------------------------------------------------------
-    print("\n⏳ [3/3] Đang chạy thống kê mô tả từ descriptive_stats_2.py...")
+    print("\n⏳ [3/4] Đang chạy thống kê mô tả và xuất 6 tệp CSV...")
     try:
         # Gọi trực tiếp hàm run() của descriptive_stats_2
         run_stats(path=output_merged)
@@ -81,14 +71,19 @@ def main():
         print(f"❌ Lỗi tại Bước 3 (Thống kê TV5): {e}")
         return
 
+    print("\n⏳ [4/4] Đang xuất các biểu đồ trực quan (TV1 & TV2)...")
+    try:
+        generate_member1_charts("data/processed/gold_final_merged.csv")
+        print(" ✅ Đã xuất thành công các ảnh biểu đồ vào: data/processed/figures/")
+    except Exception as e:
+        print(f"❌ Lỗi tại Bước 4 (Vẽ biểu đồ): {e}")
+        return
+
     print("\n" + "=" * 60)
     print("🎉 CHÚC MỪNG: PIPELINE ĐÃ HOÀN TẤT THÀNH CÔNG 100%!")
     print("👉 File dữ liệu sạch: data/processed/gold_final_merged.csv")
     print("👉 6 bảng thống kê đã có trong: data/processed/stats/")
     print("=" * 60)
-
-    print("\n⏳ [4/4] Đang xuất các biểu đồ trực quan (TV1 & TV2)...")
-    generate_member1_charts("data/processed/gold_final_merged.csv")
 
 if __name__ == "__main__":
     main()
