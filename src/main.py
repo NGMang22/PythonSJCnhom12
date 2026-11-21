@@ -14,14 +14,14 @@ try:
     from clean_usdvnd import clean_usdvnd
     from feature_engineering import build_final_dataset
     from descriptive_stats import run as run_stats
-    from visualization import generate_member1_charts
+    from visualization import generate_all_charts
 except ModuleNotFoundError:
     from src.data_loader import clean_sjc
     from src.clean_xauusd import clean_xauusd
     from src.clean_usdvnd import clean_usdvnd
     from src.feature_engineering import build_final_dataset
     from src.descriptive_stats import run as run_stats
-    from src.visualization import generate_member1_charts
+    from src.visualization import generate_all_charts
 
 def main():
     print("=" * 60)
@@ -73,7 +73,7 @@ def main():
 
     print("\n⏳ [4/4] Đang xuất các biểu đồ trực quan (TV1 & TV2)...")
     try:
-        generate_member1_charts("data/processed/gold_final_merged.csv")
+        generate_all_charts("data/processed/gold_final_merged.csv", "data/processed/figures")
         print(" ✅ Đã xuất thành công các ảnh biểu đồ vào: data/processed/figures/")
     except Exception as e:
         print(f"❌ Lỗi tại Bước 4 (Vẽ biểu đồ): {e}")
@@ -83,6 +83,7 @@ def main():
     print("🎉 CHÚC MỪNG: PIPELINE ĐÃ HOÀN TẤT THÀNH CÔNG 100%!")
     print("👉 File dữ liệu sạch: data/processed/gold_final_merged.csv")
     print("👉 6 bảng thống kê đã có trong: data/processed/stats/")
+    print("👉 Ảnh biểu đồ đã lưu tại: data/processed/figures/")
     print("=" * 60)
 
 if __name__ == "__main__":
