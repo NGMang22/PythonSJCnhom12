@@ -165,7 +165,7 @@ def plot_chart3_distribution(df: pd.DataFrame, output_dir: str):
 
     bp = ax_box.boxplot(
         data_by_year,
-        labels=[str(y) for y in years],
+        tick_labels=[str(y) for y in years],
         patch_artist=True,
         showmeans=True,
         meanprops=dict(marker='D', markeredgecolor='#0072b2', markerfacecolor='white', markersize=5),
