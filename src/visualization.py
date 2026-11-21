@@ -130,7 +130,7 @@ def plot_chart2_discrepancy(df: pd.DataFrame, output_dir: str):
     ax1.grid(True, linestyle=':', alpha=0.5)
 
     ax2 = ax1.twinx()
-    ax2.plot(df['ngay'], df['chenh_lech_pct_val'], color=color_pct, linewidth=1.5, linestyle='-.', label='Chênh lệch tương đối (%)')
+    ax2.plot(df['ngay'], df['chenh_lech_pct_val'], color=color_pct, linewidth=1.5, label='Chênh lệch tương đối (%)')
     ax2.set_ylabel("Chênh lệch tương đối (%)", color=color_pct, fontsize=10)
     ax2.tick_params(axis='y', labelcolor=color_pct)
     ax2.grid(False)
