@@ -59,14 +59,15 @@ def compute_features(df: pd.DataFrame) -> pd.DataFrame:
     )
     
     # 6. Biến động giá bán SJC so với ngày giao dịch liền trước
-    res["thay_doi_sjc"] = res[sjc_ban_col].diff().fillna(0)
+    res["thay_doi_sjc"] = res[sjc_ban_col].diff()
+    res["thay_doi_sjc_pct"] = res[sjc_ban_col].pct_change() * 100
     
     # 7. Các trường thời gian phục vụ gom nhóm phân tích (groupby)
     res["nam"] = res["ngay"].dt.year
     res["quy"] = res["ngay"].dt.to_period("Q").astype(str)
     
     # Làm tròn 2 chữ số thập phân cho các cột tính toán
-    float_cols = ["gia_quy_doi", "chenh_lech", "chenh_lech_pct", "bien_do_mua_ban", "bien_do_pct", "thay_doi_sjc"]
+    float_cols = ["gia_quy_doi", "chenh_lech", "chenh_lech_pct", "bien_do_mua_ban", "bien_do_pct", "thay_doi_sjc", "thay_doi_sjc_pct"]
     res[float_cols] = res[float_cols].round(2)
     return res
 
