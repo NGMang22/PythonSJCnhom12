@@ -106,11 +106,9 @@ def plot_chart1_price_trend(df: pd.DataFrame, output_dir: str):
     ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.9)
 
     fig.tight_layout()
-    # Lưu đồng thời cả 2 tên file để tương thích
-    fig.savefig(os.path.join(output_dir, "hinh1.png"), bbox_inches='tight', dpi=200)
     fig.savefig(os.path.join(output_dir, "chart1_trend.png"), bbox_inches='tight', dpi=200)
     plt.close(fig)
-    print(f" ✅ Đã xuất Biểu đồ 1 -> {os.path.join(output_dir, 'hinh1.png')}")
+    print(f" ✅ Đã xuất Biểu đồ 1 -> {os.path.join(output_dir, 'chart1_trend.png')}")
 
 
 # -------------------------------------------------------------
@@ -146,10 +144,9 @@ def plot_chart2_discrepancy(df: pd.DataFrame, output_dir: str):
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', frameon=True, facecolor='white')
 
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "hinh2.png"), bbox_inches='tight', dpi=200)
     fig.savefig(os.path.join(output_dir, "chart2_discrepancy.png"), bbox_inches='tight', dpi=200)
     plt.close(fig)
-    print(f" ✅ Đã xuất Biểu đồ 2 -> {os.path.join(output_dir, 'hinh2.png')}")
+    print(f" ✅ Đã xuất Biểu đồ 2 -> {os.path.join(output_dir, 'chart2_discrepancy.png')}")
 
 
 # -------------------------------------------------------------
@@ -196,10 +193,9 @@ def plot_chart3_distribution(df: pd.DataFrame, output_dir: str):
 
     fig.suptitle("BIỂU ĐỒ 3: PHÂN PHỐI MỨC CHÊNH LỆCH GIÁ VÀNG SJC SO VỚI THẾ GIỚI QUY ĐỔI", fontsize=13, fontweight='bold', y=0.98)
     fig.tight_layout(rect=[0, 0, 1, 0.93])
-    fig.savefig(os.path.join(output_dir, "hinh3.png"), bbox_inches='tight', dpi=200)
     fig.savefig(os.path.join(output_dir, "chart3_distribution.png"), bbox_inches='tight', dpi=200)
     plt.close(fig)
-    print(f" ✅ Đã xuất Biểu đồ 3 -> {os.path.join(output_dir, 'hinh3.png')}")
+    print(f" ✅ Đã xuất Biểu đồ 3 -> {os.path.join(output_dir, 'chart3_distribution.png')}")
 
 
 # -------------------------------------------------------------
@@ -245,10 +241,9 @@ def plot_chart4_correlation_spread(df: pd.DataFrame, output_dir: str):
 
     fig.suptitle("BIỂU ĐỒ 4: TƯƠNG QUAN GIÁ VÀ BIÊN ĐỘ MUA – BÁN SJC", fontsize=13, fontweight='bold', y=0.98)
     fig.tight_layout(rect=[0, 0, 1, 0.93])
-    fig.savefig(os.path.join(output_dir, "hinh4.png"), bbox_inches='tight', dpi=200)
     fig.savefig(os.path.join(output_dir, "chart4_correlation_spread.png"), bbox_inches='tight', dpi=200)
     plt.close(fig)
-    print(f" ✅ Đã xuất Biểu đồ 4 -> {os.path.join(output_dir, 'hinh4.png')}")
+    print(f" ✅ Đã xuất Biểu đồ 4 -> {os.path.join(output_dir, 'chart4_correlation_spread.png')}")
 
 
 # -------------------------------------------------------------
